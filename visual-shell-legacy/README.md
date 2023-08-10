@@ -5,15 +5,39 @@
 
 ---
 
-## Rocky Linux 8 동작 확인
+## Rocky Linux 9 환경 동작 확인
 
-* 동작 미확인
+#### 라이브러리 설치 필요
+
+```sh
+ sudo dnf install ncurses-devel
+```
+
+* 현시점에서 cygwin이 버전이 더 높긴하다..
+
+  ```
+  설치 중:
+   ncurses-devel              x86_64           6.2-8.20210508.el9           appstream           517 k
+  종속 꾸러미 설치 중:
+   ncurses-c++-libs           x86_64           6.2-8.20210508.el9           appstream            38 k
+  ...
+  ```
+
+
+
+#### 단순 동작 확인
+
+일단 동작엔 문제 없는 것 같다. 그런데 종료할 때 세그멘테이션 오류남? 왜? 그럴까... 😅 
+
+![Rocky Linux 9에서 실행](doc-resources/rocky-9-run.png)
+
+
 
 
 
 ---
 
-## Cygwin 동작 확인
+## Cygwin 환경 동작 확인
 
 #### 라이브러리 설치 필요
 
@@ -61,3 +85,4 @@ gcc -g -W -Wall vs_r13.c -lncursesw -lmenuw -lpanelw
 ## 특이사항
 
 * 터미널 화면크기를 줄이거나 늘릴 때, 이전에 `CentOS` + `Putty` 환경에서는 알아서 맞춰줬던 것 같은데... 일단 `Cygwin`에서는 그게 안됨.
+  * 착각 했었나보다.. 콘솔창 실시간 조정에 대응되진 않았었음... 😅 
