@@ -18,7 +18,17 @@
 #### 라이브러리 설치 필요
 
 * Setup 실행파일 실행시켜서 `ncurses-devel`로 검색해서 나오는 것 설치함. 그리고 `gcc`도 사용가능해야한다.
-  * `libncurses-devel`  - `6.4.3.20230114`
+  * `libncurses-devel`  - `6.4.3.20230114` 설치시 같이 설치되는 항목
+  
+    ```
+    Install libncurses++w10 6.4-3.20230114 (automatically added)
+    Install libncurses-devel 6.4-3.20230114
+    Install libpkgconf4 2.0.0-1 (automatically added)
+    Install pkg-config 2.0.0-1 (automatically added)
+    Install pkgconf 2.0.0-1 (automatically added)
+    ```
+  
+    
 
 
 
