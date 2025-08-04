@@ -1712,7 +1712,7 @@ void Dlg_Mkdir(WINDOW *dlg_win_mkdir, const char *curDirName,
     mvwaddch(dlg_win_mkdir, 2, i, ' ');
     mvwaddch(dlg_win_mkdir, 4, i, ' ');
   }
-  mvwprintw(dlg_win_mkdir, 2, 24, curDirName);
+  mvwprintw(dlg_win_mkdir, 2, 24, "%s", curDirName);
 
   echo();  // 사용자의 입력을 화면에 표시하기 위함.
   keypad(dlg_win_mkdir, FALSE);
@@ -1822,7 +1822,7 @@ void Dlg_Rename(WINDOW *dlg_win_rename, const char *prevName, char *newName) {
     mvwaddch(dlg_win_rename, 2, i, ' ');
     mvwaddch(dlg_win_rename, 4, i, ' ');
   }
-  mvwprintw(dlg_win_rename, 2, 17, prevName);
+  mvwprintw(dlg_win_rename, 2, 17, "%s", prevName);
 
   echo();  // 사용자의 입력을 화면에 표시하기 위함.
 
@@ -1975,9 +1975,9 @@ void Dlg_Chmod(WINDOW *dlg_win_chmod, int selectItemCount[],
   mvwprintw(dlg_win_chmod, 2, 22, "%s 포함 %d개 개체", (*clip_items)[0].name,
             selectItemCount[1]);
   // 클립보드 clip_items의 0 이름과 갯수 출력.
-  mvwprintw(dlg_win_chmod, 4, 22, modeform);
-  mvwprintw(dlg_win_chmod, 5, 22, modeform);
-  mvwprintw(dlg_win_chmod, 6, 22, modeform);
+  mvwprintw(dlg_win_chmod, 4, 22, "%s", modeform);
+  mvwprintw(dlg_win_chmod, 5, 22, "%s", modeform);
+  mvwprintw(dlg_win_chmod, 6, 22, "%s", modeform);
 
   wattroff(dlg_win_chmod, attr_style);
 
