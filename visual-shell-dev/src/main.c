@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+// ⬆️ POSIX.1-2008 표준 함수들을 모두 사용할 수 있도록 설정
 /*
  * 졸업작품 Visual Shell - 11월 14일까지의 진행사항에서 부터의 개선 시작!
  */
@@ -129,15 +131,15 @@ void SelectedItemClipBoard(
 );
 
 void PasteItemClipBoard(
-    int selectItemCount[], /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
-                            */
+    int selectItemCount[],   /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
+                              */
     char *absDIRstr,         /* Ctrl+V단축키가 눌려진 시점의 절대경로 */
     CLIP_ENTITY **clip_items /* 아이템의 절대경로와 이름을 저장할 포인터 */
 );
 
 void DeleteItemClipBoard(
-    int selectItemCount[], /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
-                            */
+    int selectItemCount[],   /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
+                              */
     CLIP_ENTITY **clip_items /* 아이템의 절대경로와 이름을 저장할 포인터 */
 );
 
@@ -317,7 +319,7 @@ void freeDynamicMem(MENU **my_menu, ITEM ***my_items,
 }  // 동적 메모리를 사용하는 포인터 변수가 잡고있는 메모리들을 자유롭게~~~
 
 int main(void) {
-  setlocale(LC_ALL, "ko_KR.utf8");
+  setlocale(LC_ALL, "C.UTF-8");           // 안전한 UTF-8 로케일 설정
   setenv("NCURSES_NO_UTF8_ACS", "1", 0);  // 환경변수를 설정해야하는 이유 - 웹2)
 
   PANEL *my_panels[3];
@@ -393,14 +395,23 @@ int main(void) {
   // Initialize curses
   initscr();  // Curses 초기화
 
+  // UTF-8 및 wide character 지원 설정
+  if (has_colors() == FALSE) {
+    endwin();
+    printf("터미널에서 컬러를 지원하지 않습니다.\n");
+    exit(1);
+  }
+
   start_color();  // 컬러모드 사용
   cbreak();       // 라인 버퍼링 해제
   noecho();       // 반향 제거
+
+  // UTF-8 입력 모드 설정 (추가 보장)
+  set_escdelay(25);  // ESC 지연시간을 짧게 설정
   // raw();    // SIGQUIT, SIGINT, SIGSUSP, SIGTSTP, 등의 입력을 무시
   //  해당 키입력시 그대로 ^C, ^\등으로 받을 수 있음.
   //  그러나 nCurses모드 안에서만 유효. raw() 교제4) 413p
   keypad(stdscr, TRUE);  // 기본화면 stdscr에 기능키 사용가능
-  set_escdelay(0);       // ESCDELAY = 0;   // ESC키 입력에 대한 지연 시간 없앰.
   // curs_set(0);  // 커서를 보이지 않게. 교제4) 238p
 
   init_pair(1, COLOR_YELLOW, COLOR_BLACK);
@@ -990,7 +1001,7 @@ int print_current_entity(const char *entity_name, const int pce_mode,
     return 0;
   }
   wprintw(entity_detail_display_win,
-          "[%d Byte] [%s.%s] [%c%s] [%04d/%02d/%02d-%02d:%02d]",
+          "[%ld Byte] [%s.%s] [%c%s] [%04d/%02d/%02d-%02d:%02d]",
           statbuf.st_size  // 바이트 단위 크기 (정규 파일일때.)
           ,
           usrPtr->pw_name, grpPtr->gr_name, file_attribute, view_perm,
@@ -1461,8 +1472,8 @@ void SelectedItemClipBoard(
 
 // 파일처리론 과제 2-1,2 참조.
 void PasteItemClipBoard(
-    int selectItemCount[], /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
-                            */
+    int selectItemCount[],   /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
+                              */
     char *absDIRstr,         /* Ctrl+V단축키가 눌려진 시점의 절대경로 */
     CLIP_ENTITY **clip_items /* 아이템의 절대경로와 이름을 저장할 포인터 */
 ) {
@@ -1536,8 +1547,8 @@ void PasteItemClipBoard(
     }
 
     if ((desfd = open(des_full_path_name,
-                      O_WRONLY      /* 쓰기전용으로 연다.  */
-                          | O_CREAT /* 파일이 존재하지 않으면 새로 생성. */
+                      O_WRONLY           /* 쓰기전용으로 연다.  */
+                          | O_CREAT      /* 파일이 존재하지 않으면 새로 생성. */
                           /* | O_TRUNC*/ /* 이미 존재하는 파일을 [R/W]연다면
                                             크기를 0으로 만듦. */
                           | O_EXCL /* 파일이 이미 존재하는 경우 오류 발생.  */
@@ -1583,8 +1594,8 @@ void PasteItemClipBoard(
 }  // PasteItemClipBoard() end
 
 void DeleteItemClipBoard(
-    int selectItemCount[], /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
-                            */
+    int selectItemCount[],   /* 선택된 아이템의 갯수 배열  0번은 이전 1번은 현재
+                              */
     CLIP_ENTITY **clip_items /* 아이템의 절대경로와 이름을 저장할 포인터 */
 ) {
   int i;

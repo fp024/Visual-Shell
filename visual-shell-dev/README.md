@@ -4,3 +4,14 @@
 >
 > `C`와 `Unix` 시스템 콜 함수들 기억이 안나서 잘 될지는 모르겠지만... 😅
 
+
+### 라이브러리 설치
+#### Ubuntu WSL
+```sh
+sudo apt install libncurses-dev
+```
+
+#### CentOS / Rocky Linux
+```sh
+sudo dnf install ncurses-devel
+```
