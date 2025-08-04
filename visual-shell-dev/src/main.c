@@ -1236,7 +1236,7 @@ void ctrlC_SIGINT(int signo)  // SIGINT 시그널 발생시 작동함수.
 
 void ShortCutWinDisplay(WINDOW *shortcut_display_win)  // 단축키를 표시할 윈도우
 {
-  int win_x, win_y;
+  int win_x;  // win_y 제거 (사용하지 않으므로)
 
   char botLabelCtrl[] = {"Ctrl+"};
   char botLabelCopy[] = {"Copy( )"};
@@ -1258,9 +1258,9 @@ void ShortCutWinDisplay(WINDOW *shortcut_display_win)  // 단축키를 표시할
   int label_x;  // 기능키라벨의 시작좌표
   int i;
 
-  getbegyx(shortcut_display_win, win_y, win_x);
+  win_x = getbegx(shortcut_display_win);  // X 좌표만 가져오기
 
-  label_x = win_x + 2;  // 라벨 시작 y좌표를 2로 시작
+  label_x = win_x + 2;  // 라벨 시작 x좌표를 2로 시작
   box(shortcut_display_win, 0, 0);
 
   wattron(shortcut_display_win, COLOR_PAIR(3) | A_BOLD);
@@ -1314,11 +1314,11 @@ void DirectoryWinDisplay(WINDOW *directory_display_win, const char *absDIRstr) {
 }  // DirectoryWinDisplay() end
 
 void EntityListWinDisplay(WINDOW *entity_list_win) {
-  int max_x, max_y;
+  int max_x;  // max_y 제거 (사용하지 않으므로)
 
   // 개체 리스트 메뉴를 붙일 윈도우 생성.
 
-  getmaxyx(entity_list_win, max_y, max_x);  // 윈도우가 취할 수 있는 최대 좌표
+  max_x = getmaxx(entity_list_win);  // X 좌표만 가져오기
   // 결국 우측끝 최하단 좌표.
   box(entity_list_win, 0, 0);
   print_in_middle(entity_list_win, 1, 0, max_x, "개체 이름 / 크기",
@@ -1672,7 +1672,7 @@ int ddot_no_select(
 
 void Dlg_Mkdir(WINDOW *dlg_win_mkdir, const char *curDirName,
                char *usrIptName) {
-  int y, x, max_y, max_x;
+  int x, max_x;  // y, max_y 제거 (사용하지 않으므로)
   int i;
   int attr_style;
 
@@ -1685,7 +1685,7 @@ void Dlg_Mkdir(WINDOW *dlg_win_mkdir, const char *curDirName,
   usrIptName[0] = '\0';
   keypad(dlg_win_mkdir, TRUE);  // initscr()이전의 이 함수 호출은 의미없음.
 
-  getmaxyx(dlg_win_mkdir, max_y, max_x);
+  max_x = getmaxx(dlg_win_mkdir);  // X 좌표만 가져오기
 
   box(dlg_win_mkdir, 0, 0);
 
@@ -1765,7 +1765,7 @@ void Dlg_Mkdir(WINDOW *dlg_win_mkdir, const char *curDirName,
     wrefresh(dlg_win_mkdir);
   }
 
-  getyx(dlg_win_mkdir, y, x);  // 현재 커서의 좌표값얻어옴.
+  x = getcurx(dlg_win_mkdir);  // 현재 커서의 X 좌표만 가져오기
   // 사용자가 선택한 좌표의 위치로 [확인]인지 [취소]인지 선택하기로함.
   if ((x > 39 && x < 50) || usrIptName[0] == '\0')  // 취소 상태.
   {
@@ -1786,7 +1786,7 @@ void Dlg_Mkdir(WINDOW *dlg_win_mkdir, const char *curDirName,
 }  // Dlg_Mkdir() end
 
 void Dlg_Rename(WINDOW *dlg_win_rename, const char *prevName, char *newName) {
-  int y, x, max_y, max_x;
+  int y, x, max_x;  // max_y 제거 (사용하지 않으므로)
   int i;
   int attr_style;
   chtype ipt;
@@ -1794,7 +1794,7 @@ void Dlg_Rename(WINDOW *dlg_win_rename, const char *prevName, char *newName) {
   newName[0] = '\0';
   keypad(dlg_win_rename, TRUE);  // initscr()이전의 이 함수 호출은 의미없음.
 
-  getmaxyx(dlg_win_rename, max_y, max_x);
+  max_x = getmaxx(dlg_win_rename);  // X 좌표만 가져오기
 
   box(dlg_win_rename, 0, 0);
 
@@ -1922,7 +1922,7 @@ void Dlg_Rename(WINDOW *dlg_win_rename, const char *prevName, char *newName) {
 
 void Dlg_Chmod(WINDOW *dlg_win_chmod, int selectItemCount[],
                CLIP_ENTITY **clip_items) {
-  int y, x, pre_y, pre_x, max_y, max_x;
+  int y, x, pre_y, pre_x, max_x;  // max_y 제거 (사용하지 않으므로)
   int i;
   mode_t perm = 0000000;
   int attr_style;
@@ -1940,7 +1940,7 @@ void Dlg_Chmod(WINDOW *dlg_win_chmod, int selectItemCount[],
 
   keypad(dlg_win_chmod, TRUE);  // initscr()이전의 이 함수 호출은 의미없음.
 
-  getmaxyx(dlg_win_chmod, max_y, max_x);
+  max_x = getmaxx(dlg_win_chmod);  // X 좌표만 가져오기
 
   box(dlg_win_chmod, 0, 0);
 
