@@ -7,9 +7,9 @@ mkdir -p build
 gcc -g -W -Wall -o build/visual-shell src/main.c -lncursesw -lmenuw -lpanelw
 
 if [ $? -eq 0 ]; then
-    echo "[v] Build successful: build/visual-shell"
+    echo "✅Build successful: build/visual-shell"
     echo "Run with: ./build/visual-shell"
 else
-    echo "[x] Build failed"
+    echo "❌Build failed"
     exit 1
 fi
