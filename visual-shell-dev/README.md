@@ -4,6 +4,10 @@
 >
 > `C`와 `Unix` 시스템 콜 함수들 기억이 안나서 잘 될지는 모르겠지만... 😅
 
+### 개발 환경
+
+* OS환경: `Ubuntu WSL` 또는 가상머신의 `Rocky Linux`
+* 개발도구: `VSCode + WSL/SSH Remote`, `GCC`
 
 ### 라이브러리 설치
 #### Ubuntu WSL
