@@ -2,6 +2,8 @@
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
 .idea
 
 # 빌드 결과물 제외
@@ -9,7 +11,7 @@ build/
 *.exe
 *.out
 a.out
-visual-shell    # 👈 이것도 추가!
+visual-shell
 
 # 임시 파일
 *.o

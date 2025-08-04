@@ -713,7 +713,8 @@ int main(void) {
                  'H' | A_BOLD | A_BLINK | COLOR_PAIR(4));
         break;
 
-      case 0x16:  // Paste 명령
+      case 0x16:  // Paste 명령 (CentOS / Rocky에서 정상 동작)
+      case 0x63:  // Ubuntu WSL 환경에서는 Ctrl + V가 0x63으로 들어왔다.
         // Paste명령이 시작되자 마자 Ctrl+C 시그널이 무시되어야함.
         act.sa_handler = SIG_IGN;
         if (sigaction(SIGINT, &act, &oldact) == -1)  // 이전 oldact에 저장
