@@ -1,0 +1,5 @@
+{
+  // 포멧터 설정
+  "editor.formatOnSave": true,
+  "C_Cpp.clang_format_style": "file",
+}

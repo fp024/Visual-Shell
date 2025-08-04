@@ -1,0 +1,29 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions: []
+dictionaries: []
+words:
+  - abspath
+  - desfd
+  - Giga
+  - Gookin
+  - Haviland
+  - lmenuw
+  - lncursesw
+  - lpanelw
+  - lqqqk
+  - myls
+  - oact
+  - octperm
+  - ptsn
+  - Rstr
+  - rwxrwxrwx
+  - Salama
+  - sigmjmp
+  - SIGSUSP
+  - startx
+  - starty
+  - templet
+  - tiems
+ignoreWords: []
+import: []
