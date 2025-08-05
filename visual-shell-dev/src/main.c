@@ -322,13 +322,18 @@ int main(void) {
   setlocale(LC_ALL, "C.UTF-8");           // 안전한 UTF-8 로케일 설정
   setenv("NCURSES_NO_UTF8_ACS", "1", 0);  // 환경변수를 설정해야하는 이유 - 웹2)
 
-  PANEL *my_panels[3];
+  PANEL *my_panels[4];  // 0:entity_list, 1:mkdir_dlg, 2:rename_dlg, 3:chmod_dlg
   PANEL *top;
 
-  WINDOW *entity_list_win,  // 현재 디렉토리 안의 개체를 출력하는
-                            // 메뉴리스트를 붙일 윈도우
-      *shortcut_display_win, *entity_detail_display_win, *directory_display_win,
-      *dlg_win_mkdir, *dlg_win_rename, *dlg_win_chmod;
+  WINDOW *entity_list_win,         // 현재 디렉토리 안의 개체를 출력하는
+                                   // 메뉴리스트를 붙일 윈도우
+                                   //
+      *shortcut_display_win,       //
+      *entity_detail_display_win,  //
+      *directory_display_win,      //
+      *dlg_win_mkdir,              //
+      *dlg_win_rename,             //
+      *dlg_win_chmod;
 
   ITEM **my_items;  // ITEM에 대한 포인터 배열의 첫번째 주소를 저장할
                     // 2중 포인터 변수.
@@ -843,9 +848,18 @@ int main(void) {
   freeDynamicMem(&my_menu, &my_items, &d_ptrArray, &rtn_entity_size_chr,
                  &absDIRstr, &n_choices);
 
-  free(bakAbsDIRstr);
-  bakAbsDIRstr = (char *)NULL;
+  if (bakAbsDIRstr != NULL) {
+    free(bakAbsDIRstr);
+    bakAbsDIRstr = (char *)NULL;
+  }
 
+  // 패널을 먼저 해제 (윈도우보다 먼저!)
+  del_panel(my_panels[0]);
+  del_panel(my_panels[1]);
+  del_panel(my_panels[2]);
+  del_panel(my_panels[3]);
+
+  // 윈도우를 나중에 해제
   delwin(directory_display_win);
   delwin(entity_list_win);  // WINDOW를 메모리에서 해제 그러나 이미 출력된
                             // 이미지가 제거되지는 않음
@@ -854,11 +868,6 @@ int main(void) {
   delwin(dlg_win_mkdir);
   delwin(dlg_win_rename);
   delwin(dlg_win_chmod);
-
-  del_panel(my_panels[0]);
-  del_panel(my_panels[1]);
-  del_panel(my_panels[2]);
-  del_panel(my_panels[3]);
 
   // 메모리 해제 끝..
 
